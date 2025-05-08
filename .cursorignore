@@ -1,0 +1,19 @@
+.env*
+# Ignore specific file `config.json`
+config.json
+
+# Ignore `dist` directory and all files inside
+dist/
+
+# Ignore all files with a `.log` extension
+*.log
+
+# Ignore entire codebase
+*
+
+# Do not ignore `app` directory
+!app/
+!docs/
+
+# Ignores logs directories in any directory
+**/logs
