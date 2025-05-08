@@ -1,0 +1,4 @@
+google-generativeai
+pinecone-client
+google-genai
+jinja2 
