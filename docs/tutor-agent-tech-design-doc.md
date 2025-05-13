@@ -23,16 +23,17 @@ The architecture of the Comfy UI Tutorial Agent consists of the following compon
 3. **NLP Service**: Google Gemini will be used to understand user queries and generate appropriate responses.
 4. **YouTube Integration**: The backend will integrate with YouTube's API to fetch video links and timestamps. Additionally, YouTube videos will be downloaded, and their transcripts (with timestamps) and screenshots will be extracted and stored in a vector database.
 5. **Vector Database**: A vector database will be used to store and retrieve information extracted from YouTube videos and other data sources. This database will be queried to provide relevant information to users.
+6. **Interactions Between Frontend and Backend**: The frontend and backend of the Comfy UI Tutorial Agent communicate using WebSocket. This allows for real-time, bidirectional communication between the user interface and the server. When a user types a question into the chatbot interface, the query is sent to the backend via WebSocket. The backend processes the query, retrieves the relevant information, and sends the response back to the frontend through the same WebSocket connection. This ensures that users receive quick and seamless responses to their queries.
 
 ```mermaid
 flowchart TD
-    UI[User Interface] -->|User Query| Backend
+    UI[User Interface] -->|User Query via WebSocket| Backend
     Backend -->|Process Query| NLP[Google Gemini]
     NLP -->|Fetch Data| VectorDB[Pinecone]
     Backend -->|Fetch Video| YouTube[YouTube API]
     VectorDB -->|Return Data| Backend
     YouTube -->|Return Video| Backend
-    Backend -->|Generate Response| UI[User Interface]
+    Backend -->|Generate Response via WebSocket| UI[User Interface]
 ```
 
 ## Data Flow
