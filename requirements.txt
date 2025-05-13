@@ -1,4 +1,4 @@
-google-generativeai
-pinecone-client
 google-genai
-jinja2 
+pinecone-client
+jinja2
+python-dotenv
