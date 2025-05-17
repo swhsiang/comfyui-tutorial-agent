@@ -63,6 +63,14 @@ The communication between the client (frontend) and backend is facilitated using
 7. **Display Response**: The chatbot interface displays the response to the user in the chat window.
 
 ## Data Flow
+
+### Video Processing Flow
+1. **Video Input**: The YouTube video is provided as input to the system.
+2. **Transcript Generation**: Google Gemini processes the video and generates a transcript using the provided prompt.
+3. **Metadata Extraction**: Extract metadata from the video, including timestamps and speaker identification.
+4. **Data Storage**: The generated transcript, metadata, and transcript summary are stored in the vector database.
+
+### Chatbot Interaction Flow
 1. **User Query**: The user types a question into the chatbot interface.
 2. **NLP Processing**: The query is sent to the NLP service, which processes the query and determines the intent.
 3. **Data Retrieval**: Based on the intent, the backend queries the vector database and other data sources to retrieve relevant information.
@@ -162,6 +170,15 @@ sequenceDiagram
     UI->>User: Display Response
 ```
 
+```mermaid
+flowchart TD
+    VideoInput[Video Input] -->|Process Video| TranscriptGeneration[Transcript Generation]
+    TranscriptGeneration -->|Extract Metadata| MetadataExtraction[Metadata Extraction]
+    MetadataExtraction -->|Store Data| DataStorage[Data Storage]
+    DataStorage -->|Query Data| ChatbotInteraction[Chatbot Interaction]
+    ChatbotInteraction -->|Generate Response| UserResponse[User Response]
+    UserResponse -->|Display Response| UserInterface[User Interface]
+```
 
 ## Transcript Extraction with Google Gemini
 
