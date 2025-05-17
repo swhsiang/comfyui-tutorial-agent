@@ -15,7 +15,8 @@ The Comfy UI Tutorial Agent is a sidebar/chatbot interface integrated into the C
 - Ensure the chatbot can link to specific YouTube videos with timestamps for detailed tutorials.
 - Plan for future enhancements where the chatbot can create UI elements based on user confirmation.
 
-## Architecture
+## Architecture and Components
+
 The architecture of the Comfy UI Tutorial Agent consists of the following components:
 
 1. **Frontend**: The chatbot interface will be built using React.js and integrated into the right sidebar of Comfy UI.
@@ -24,6 +25,17 @@ The architecture of the Comfy UI Tutorial Agent consists of the following compon
 4. **YouTube Integration**: The backend will integrate with YouTube's API to fetch video links and timestamps. Additionally, YouTube videos will be downloaded, and their transcripts (with timestamps) and screenshots will be extracted and stored in a vector database.
 5. **Vector Database**: A vector database will be used to store and retrieve information extracted from YouTube videos and other data sources. This database will be queried to provide relevant information to users.
 6. **Interactions Between Frontend and Backend**: The frontend and backend of the Comfy UI Tutorial Agent communicate using WebSocket. This allows for real-time, bidirectional communication between the user interface and the server. When a user types a question into the chatbot interface, the query is sent to the backend via WebSocket. The backend processes the query, retrieves the relevant information, and sends the response back to the frontend through the same WebSocket connection. This ensures that users receive quick and seamless responses to their queries.
+
+### Components and Protocols
+
+To implement a chatbot using WebSocket, the following components and protocols are needed:
+
+1. **WebSocket Server**: The backend must include a WebSocket server to handle incoming connections from the frontend. This server will manage the communication between the client and the backend services.
+2. **WebSocket Client**: The frontend must include a WebSocket client to establish a connection with the backend server. This client will send user queries and receive responses in real-time.
+3. **Message Protocol**: Define a message protocol for communication between the client and server. This protocol should specify the format of the messages, including the query, response, and any metadata.
+4. **LLM Service Integration**: Integrate the LLM service (e.g., Google Gemini) with the backend to process user queries and recognize intents.
+5. **Vector Database Integration**: Integrate the vector database (e.g., Pinecone) with the backend to store and retrieve information relevant to user queries.
+6. **Error Handling**: Implement robust error handling mechanisms to manage connection issues, message parsing errors, and other potential problems.
 
 ```mermaid
 flowchart TD
@@ -36,12 +48,94 @@ flowchart TD
     Backend -->|Generate Response via WebSocket| UI[User Interface]
 ```
 
+## Communication Between Client and Backend
+
+The communication between the client (frontend) and backend is facilitated using WebSocket. This allows for real-time, bidirectional communication between the user interface and the server. The process is as follows:
+
+1. **User Query**: The user types a question into the chatbot interface and submits it.
+2. **WebSocket Communication**: The query is sent to the backend via WebSocket.
+3. **LLM Service for Intent Recognition**: The backend uses a Large Language Model (LLM) service, such as Google Gemini, to process the query and recognize the user's intent.
+4. **Intent Handling**:
+   - If the user's intention is about the techniques of ComfyUI, the backend invokes a function to query the vector database (Pinecone) for relevant information.
+   - The vector database stores and retrieves information extracted from YouTube videos and other data sources.
+5. **Response Generation**: The backend generates a response based on the retrieved information and the recognized intent.
+6. **WebSocket Response**: The response is sent back to the frontend via WebSocket.
+7. **Display Response**: The chatbot interface displays the response to the user in the chat window.
+
 ## Data Flow
 1. **User Query**: The user types a question into the chatbot interface.
 2. **NLP Processing**: The query is sent to the NLP service, which processes the query and determines the intent.
 3. **Data Retrieval**: Based on the intent, the backend queries the vector database and other data sources to retrieve relevant information.
 4. **Response Generation**: The retrieved information is summarized, and a response is generated. The response may include a YouTube tutorial link with a timestamp.
 5. **User Response**: The generated response is sent back to the chatbot interface and displayed to the user.
+
+### WebSocket Message Format
+
+The communication between the frontend and backend via WebSocket requires a well-defined message format. The WebSocket messages will be in JSON format to ensure easy parsing and readability. Below is the schema for the WebSocket message:
+
+#### Schema
+
+```json
+{
+  "type": "string", // Type of the message (e.g., "query", "response", "error")
+  "timestamp": "string", // Timestamp of when the message was sent
+  "session_id": "string", // Unique identifier for the user session
+  "payload": {
+    "query": "string", // The user's query (for messages of type "query")
+    "response": "string", // The chatbot's response (for messages of type "response")
+    "error": "string", // Error message (for messages of type "error")
+    "metadata": {
+      "intent": "string", // Recognized intent of the user's query
+      "source": "string" // Source of the information (e.g., "vector_db", "youtube")
+    }
+  }
+}
+```
+
+#### Example Messages
+
+**Query Message**
+
+```json
+{
+  "type": "query",
+  "timestamp": "2023-10-01T12:00:00Z",
+  "session_id": "abc123",
+  "payload": {
+    "query": "How do I install Comfy UI?"
+  }
+}
+```
+
+**Response Message**
+
+```json
+{
+  "type": "response",
+  "timestamp": "2023-10-01T12:00:02Z",
+  "session_id": "abc123",
+  "payload": {
+    "response": "To install Comfy UI, follow these steps...",
+    "metadata": {
+      "intent": "installation",
+      "source": "vector_db"
+    }
+  }
+}
+```
+
+**Error Message**
+
+```json
+{
+  "type": "error",
+  "timestamp": "2023-10-01T12:00:01Z",
+  "session_id": "abc123",
+  "payload": {
+    "error": "Unable to process the query. Please try again later."
+  }
+}
+```
 
 ```mermaid
 sequenceDiagram
@@ -53,18 +147,19 @@ sequenceDiagram
     participant YouTube as YouTube API
 
     User->>UI: Type Question
-    UI->>Backend: Send Query
+    UI->>Backend: Send Query via WebSocket
     Backend->>NLP: Process Query
     NLP->>Backend: Return Intent
     Backend->>VectorDB: Query Data
     VectorDB->>Backend: Return Data
     Backend->>YouTube: Fetch Video
     YouTube->>Backend: Return Video
-    Backend->>UI: Generate Response
+    Backend->>UI: Generate Response via WebSocket
     UI->>User: Display Response
 ```
 
-### Transcript Extraction with Google Gemini
+
+## Transcript Extraction with Google Gemini
 
 Google Gemini is a multimodal model that supports text, video, and other kinds of inputs. The following prompt will be used for transcript extraction from YouTube videos:
 
