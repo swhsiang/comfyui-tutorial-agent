@@ -77,17 +77,18 @@ The communication between the frontend and backend via WebSocket requires a well
 
 ```json
 {
-  "type": "string", // Type of the message (e.g., "query", "response", "error")
+  "type": "string", // Type of the message (e.g., "request", "response", "error")
   "timestamp": "string", // Timestamp of when the message was sent
   "session_id": "string", // Unique identifier for the user session
   "payload": {
-    "query": "string", // The user's query (for messages of type "query")
+    "request": "string", // The user's query (for messages of type "request")
     "response": "string", // The chatbot's response (for messages of type "response")
     "error": "string", // Error message (for messages of type "error")
     "metadata": {
       "intent": "string", // Recognized intent of the user's query
       "source": "string" // Source of the information (e.g., "vector_db", "youtube")
-    }
+    },
+    "sender": "string" // server or client
   }
 }
 ```
@@ -98,12 +99,13 @@ The communication between the frontend and backend via WebSocket requires a well
 
 ```json
 {
-  "type": "query",
+  "type": "request",
   "timestamp": "2023-10-01T12:00:00Z",
   "session_id": "abc123",
   "payload": {
-    "query": "How do I install Comfy UI?"
-  }
+    "request": "How do I install Comfy UI?"
+  },
+  "sender": "user01"
 }
 ```
 
@@ -120,7 +122,8 @@ The communication between the frontend and backend via WebSocket requires a well
       "intent": "installation",
       "source": "vector_db"
     }
-  }
+  },
+  "sender": "server"
 }
 ```
 
@@ -133,7 +136,8 @@ The communication between the frontend and backend via WebSocket requires a well
   "session_id": "abc123",
   "payload": {
     "error": "Unable to process the query. Please try again later."
-  }
+  },
+  "sender": "server"
 }
 ```
 
