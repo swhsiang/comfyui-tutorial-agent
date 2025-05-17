@@ -80,7 +80,11 @@
 **Architecture**:
 - The chatbot will be built using a microservices architecture.
 - It will use natural language processing (NLP) to understand user queries.
-- The backend will integrate with YouTube's API to fetch video links and timestamps.
+- The backend will be implemented using Python.
+- The NLP service will be provided by Google Gemini.
+- Communication between the client and server will be handled using WebSocket.
+- The vector database used for storing transcripts and metadata will be Pinecone.
+- The chatbot's response flow will use a Retrieval-Augmented Generation (RAG) system, querying the vector database as the data source.
 
 **Technology Stack**:
 - Frontend: React.js for the chatbot interface.
