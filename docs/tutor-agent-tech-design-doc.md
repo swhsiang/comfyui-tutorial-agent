@@ -250,6 +250,45 @@ Generate a response that includes a summary of the relevant information and a Yo
 - **Integration**: YouTube API for fetching video links.
 - **Vector Database**: Pinecone for storing and retrieving information extracted from YouTube videos and other data sources.
 
+## Code Organization
+To maintain a clean and modular codebase, the following directory structure is proposed:
+
+```
+app/
+├── main.py
+├── __init__.py
+├── video_processing/
+│   ├── __init__.py
+│   ├── transcript_generation.py
+│   ├── metadata_extraction.py
+│   ├── data_storage.py
+├── chatbot/
+│   ├── __init__.py
+│   ├── agent.py
+│   ├── data_retrieval.py
+│   ├── response_generation.py
+│   ├── websocket_communication.py
+├── rag_system/
+│   ├── __init__.py
+│   ├── embedding.py
+│   ├── pinecone_operations.py
+```
+
+### File Responsibilities
+1. **main.py**: Entry point of the application, initializing services and orchestrating the overall flow.
+2. **video_processing/**:
+   - `transcript_generation.py`: Functions related to generating transcripts from YouTube videos using Google Gemini.
+   - `metadata_extraction.py`: Functions for extracting metadata from videos.
+   - `data_storage.py`: Functions for storing transcripts, metadata, and summaries into the vector database (Pinecone).
+3. **chatbot/**:
+   - `agent.py`: Functions for processing user queries using Google Gemini.
+   - `data_retrieval.py`: Functions for retrieving relevant information from the vector database based on user queries.
+   - `response_generation.py`: Functions for generating responses to user queries.
+   - `websocket_communication.py`: Functions for handling WebSocket communication between the client and server.
+4. **rag_system/**:
+   - `embedding.py`: Functions for generating embeddings using Google Gemini.
+   - `pinecone_operations.py`: Functions for initializing Pinecone index, upserting embeddings, and querying Pinecone.
+
 ## Milestones
 1. **Design Phase**: Complete UI/UX design and finalize technical specifications.
 2. **Development Phase**: Implement the chatbot interface and backend services.
