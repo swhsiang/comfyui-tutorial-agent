@@ -1,4 +1,7 @@
 google-genai
-pinecone-client
 jinja2
 python-dotenv
+pinecone
+fastapi
+uvicorn
+fastapi[standard]
