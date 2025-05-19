@@ -250,7 +250,7 @@ Generate a response that includes a summary of the relevant information and a Yo
 - **Integration**: YouTube API for fetching video links.
 - **Vector Database**: Pinecone for storing and retrieving information extracted from YouTube videos and other data sources.
 
-## Code Organization
+## File Structure
 To maintain a clean and modular codebase, the following directory structure is proposed:
 
 ```
@@ -259,7 +259,7 @@ app/
 ├── __init__.py
 ├── video_processing/
 │   ├── __init__.py
-│   ├── transcript_generation.py
+│   ├── video_processing.py
 │   ├── metadata_extraction.py
 │   ├── data_storage.py
 ├── chatbot/
@@ -277,8 +277,7 @@ app/
 ### File Responsibilities
 1. **main.py**: Entry point of the application, initializing services and orchestrating the overall flow.
 2. **video_processing/**:
-   - `transcript_generation.py`: Functions related to generating transcripts from YouTube videos using Google Gemini.
-   - `metadata_extraction.py`: Functions for extracting metadata from videos.
+   - `video_processing.py`: Functions related to generating transcripts from YouTube videos using Google Gemini and extracting metadata from videos.
    - `data_storage.py`: Functions for storing transcripts, metadata, and summaries into the vector database (Pinecone).
 3. **chatbot/**:
    - `agent.py`: Functions for processing user queries using Google Gemini.
@@ -290,17 +289,82 @@ app/
    - `pinecone_operations.py`: Functions for initializing Pinecone index, upserting embeddings, and querying Pinecone.
 
 ## Milestones
-1. **Design Phase**: Complete UI/UX design and finalize technical specifications.
-2. **Development Phase**: Implement the chatbot interface and backend services.
-3. **Testing Phase**: Conduct thorough testing to ensure functionality and performance.
-4. **Launch Phase**: Deploy the chatbot to the production environment.
 
-## Risks and Mitigations
-- **Technical Complexity**: The integration of NLP and YouTube API may be complex. Mitigation: Conduct thorough research and prototyping during the design phase.
-- **User Adoption**: Users may be hesitant to use the new chatbot interface. Mitigation: Provide clear documentation and tutorials on how to use the chatbot.
+1. **Design Phase**
+   - **UI/UX Design**
+     - [x] Task: Design the layout for the chatbot integration into the Comfy UI sidebar.
+   - **Technical Specifications**
+     - [x] Task: Define the technical stack for the frontend and backend.
+     - [ ] Task: Specify the APIs and services to be used (e.g., Google Gemini, YouTube API, Pinecone).
+     - [x] Task: Document the architecture and components of the system.
+     - [x] Task: Define the WebSocket message protocol and schema.
 
-## Acceptance Criteria
-- The chatbot must be fully integrated into the Comfy UI sidebar.
-- Users must be able to type questions and receive accurate responses.
-- The chatbot must link to YouTube videos with specific timestamps.
-- The system must handle at least 100 concurrent users without performance issues.
+2. **Development Phase**
+   - **Frontend Development**
+     - [x] Task: Set up the Vue.js project for the chatbot interface.
+     - [x] Task: Implement the text input field for user queries.
+     - [ ] Task: Implement the response area for displaying chatbot answers.
+     - [x] Task: Integrate the WebSocket client for real-time communication with the backend.
+     - [ ] Task: Style the chatbot interface to match the Comfy UI design.
+   - **Backend Development**
+     - [x] Task: Set up the FastAPI project for the backend server.
+     - [x] Task: Implement the WebSocket server for handling client connections.
+     - [x] Task: Define the WebSocket message handling logic.
+     - [ ] Task: Integrate Google Gemini for NLP processing.
+     - [ ] Task: Integrate the YouTube API for fetching video links and metadata.
+     - [ ] Task: Implement the vector database integration with Pinecone.
+     - [ ] Task: Develop the logic for processing user queries and generating responses.
+   - **Video Processing**
+     - [ ] Task: Implement the video processing module to generate transcripts using Google Gemini.
+     - [ ] Task: Extract metadata from YouTube videos.
+     - [ ] Task: Store transcripts and metadata in the vector database.
+   - **Data Retrieval and Response Generation**
+     - [ ] Task: Implement the data retrieval module to query the vector database.
+     - [ ] Task: Develop the response generation module to create responses based on retrieved data.
+     - [ ] Task: Ensure responses include YouTube tutorial links with timestamps.
+
+3. **Testing Phase**
+   - **Unit Testing**
+     - [ ] Task: Write unit tests for the frontend components.
+     - [ ] Task: Write unit tests for the backend endpoints and WebSocket communication.
+     - [ ] Task: Write unit tests for the video processing and data retrieval modules.
+   - **Integration Testing**
+     - [ ] Task: Test the integration between the frontend and backend via WebSocket.
+     - [ ] Task: Test the integration of Google Gemini for NLP processing.
+     - [ ] Task: Test the integration of the YouTube API for fetching video links.
+     - [ ] Task: Test the integration of the vector database for storing and retrieving data.
+   - **Performance Testing**
+     - [ ] Task: Conduct load testing to ensure the system can handle at least 100 concurrent users.
+     - [ ] Task: Optimize the backend for performance and scalability.
+
+4. **Launch Phase**
+   - **Deployment**
+     - [ ] Task: Set up the production environment for the frontend and backend.
+     - [ ] Task: Deploy the chatbot interface to the Comfy UI sidebar.
+     - [ ] Task: Deploy the backend server to a cloud provider (e.g., AWS, GCP).
+   - **Documentation**
+     - [ ] Task: Create user documentation for the chatbot interface.
+     - [ ] Task: Create technical documentation for the system architecture and components.
+     - [ ] Task: Provide tutorials and guides for using the chatbot.
+   - **Monitoring and Maintenance**
+     - [ ] Task: Set up monitoring for the backend server (e.g., using Prometheus, Grafana).
+     - [ ] Task: Implement logging and error tracking for the frontend and backend.
+     - [ ] Task: Plan for regular maintenance and updates to the system.
+
+**Risks and Mitigations**
+
+- **Technical Complexity**
+  - Task: Conduct research and prototyping for NLP and YouTube API integration.
+  - Task: Plan for potential technical challenges and document solutions.
+- **User Adoption**
+  - Task: Develop clear documentation and tutorials for using the chatbot.
+  - Task: Gather user feedback and iterate on the design and functionality.
+
+**Acceptance Criteria**
+
+- **Integration**
+  - Task: Ensure the chatbot is fully integrated into the Comfy UI sidebar.
+  - Task: Verify that users can type questions and receive accurate responses.
+- **Functionality**
+  - Task: Ensure the chatbot links to YouTube videos with specific timestamps.
+  - Task: Test the system's ability to handle at least 100 concurrent users without performance issues.
