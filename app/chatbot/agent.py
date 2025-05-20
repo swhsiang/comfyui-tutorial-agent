@@ -27,28 +27,6 @@ class Metadata(BaseModel):
     date: str = "Unknown"
 
 
-# def get_gemini_embedding(texts: List[str]) -> List:
-#     """
-#     Get embeddings for the given texts using the Gemini embedding model.
-
-#     Args:
-#         texts (List[str]): List of texts to embed.
-
-#     Returns:
-#         List: List of embeddings.
-#     """
-#     embedding_resp = client.models.embed_content(
-#         model=EMBEDDING_MODEL_NAME,
-#         contents=texts,
-#         config=types.EmbedContentConfig(
-#             task_type="retrieval_document",
-#             title="YouTube Transcript Chunk",
-#             output_dimensionality=1536,
-#         ),
-#     )
-#     return embedding_resp.embeddings
-
-
 def generate_answer(context: str, query_str: str) -> str:
     """
     Generate an answer based on the provided context and query string.
