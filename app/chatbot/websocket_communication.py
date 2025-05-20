@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from datetime import datetime, timezone
 import json
 from uuid import uuid4
+from .agent import handle_user_query
 
 app = FastAPI()
 
@@ -13,6 +14,7 @@ MESSAGE_SENDER_USER = "user"
 
 # Define constants for message types
 MESSAGE_TYPE_REQUEST = "request"
+MESSAGE_TYPE_USER_MESSAGE = "user_message"
 MESSAGE_TYPE_RESPONSE = "response"
 MESSAGE_TYPE_ERROR = "error"
 MESSAGE_TYPE_INIT = "init"
@@ -47,8 +49,8 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
-            print(f"receive data from client {data}")
             message = json.loads(data)
+            print(f"receive data from client {message}")
             response = process_message(message)
             await websocket.send_text(json.dumps(response))
     except WebSocketDisconnect:
@@ -59,8 +61,10 @@ def process_message(data: dict) -> dict:
     if data.get('session_id') is None:
         data['session_id'] = str(uuid4())
     message = WebSocketMessage(**data)
-    if message.type == MESSAGE_TYPE_REQUEST:
-        user_query = message.payload.get('request')
+    if message.type == MESSAGE_TYPE_USER_MESSAGE:
+        print(f"process_message message: {message}")
+        print(f"process_message message.payload: {message.payload}")
+        user_query = message.payload.get('text')
         response_text = handle_user_query(user_query)
         response = WebSocketResponse(
             type=MESSAGE_TYPE_RESPONSE,
@@ -96,12 +100,6 @@ def process_message(data: dict) -> dict:
             sender=MESSAGE_SENDER_SERVER
         )
     return response.model_dump()
-
-# Handle user queries
-def handle_user_query(query: str) -> str:
-    # Placeholder function to handle user queries
-    # This should be replaced with actual logic to process the query
-    return f"Received query: {query}"
 
 # Start the FastAPI server
 if __name__ == "__main__":
