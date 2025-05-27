@@ -1,12 +1,8 @@
-from google.genai import types
-from google import genai
 from pydantic import BaseModel
 from typing import List
 import os
 from dotenv import load_dotenv
 from pinecone import Pinecone
-from pinecone.data.index import Index
-from uuid import uuid4
 from chatbot.genai_client import client
 from rag_system.pinecone_operations import initialize_pinecone_index, upsert_embedding, query_pinecone
 from chatbot.constants import INDEX_NAME, EMBEDDING_DIMENSION, SIMILARITY_METRIC

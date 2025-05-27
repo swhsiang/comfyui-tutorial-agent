@@ -295,7 +295,7 @@ app/
      - [x] Task: Design the layout for the chatbot integration into the Comfy UI sidebar.
    - **Technical Specifications**
      - [x] Task: Define the technical stack for the frontend and backend.
-     - [ ] Task: Specify the APIs and services to be used (e.g., Google Gemini, YouTube API, Pinecone).
+     - [x] Task: Specify the APIs and services to be used (e.g., Google Gemini, YouTube API, Pinecone).
      - [x] Task: Document the architecture and components of the system.
      - [x] Task: Define the WebSocket message protocol and schema.
 
@@ -314,6 +314,8 @@ app/
      - [ ] Task: Integrate the YouTube API for fetching video links and metadata.
      - [x] Task: Implement the vector database integration with Pinecone.
      - [x] Task: Develop the logic for processing user queries and generating responses.
+     - [ ] Task: PostgreSQL integration
+     - [ ] Task: Chatroom session management - CRUD
    - **Video Processing**
      - [ ] Task: Implement the video processing module to generate transcripts using Google Gemini.
      - [ ] Task: Extract metadata from YouTube videos.
@@ -340,8 +342,7 @@ app/
 4. **Launch Phase**
    - **Deployment**
      - [ ] Task: Set up the production environment for the frontend and backend.
-     - [ ] Task: Deploy the chatbot interface to the Comfy UI sidebar.
-     - [ ] Task: Deploy the backend server to a cloud provider (e.g., AWS, GCP).
+     - [ ] Task: Deploy the backend server to a cloud provider (e.g., Cloudflare).
    - **Documentation**
      - [ ] Task: Create user documentation for the chatbot interface.
      - [x] Task: Create technical documentation for the system architecture and components.
