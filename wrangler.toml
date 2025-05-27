@@ -2,17 +2,3 @@ name = "comfyui-tutorial-agent"
 main = "src/app.py"
 compatibility_flags = ["python_workers"]
 compatibility_date = "2024-01-29"
-
-account_id = "your-cloudflare-account-id"
-workers_dev = true
-
-[env.production]
-name = "comfyui-tutorial-agent-prod"
-route = "your-production-domain.com/*"
-zone_id = "your-cloudflare-zone-id"
-
-[env.staging]
-name = "comfyui-tutorial-agent-staging"
-route = "your-staging-domain.com/*"
-zone_id = "your-cloudflare-zone-id"
-
