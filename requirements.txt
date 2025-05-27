@@ -4,4 +4,3 @@ python-dotenv
 pinecone
 fastapi
 uvicorn
-fastapi[standard]
