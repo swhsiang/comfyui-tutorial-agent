@@ -3,6 +3,8 @@
 ## Overview
 The Comfy UI Tutorial Agent is a sidebar/chatbot interface integrated into the Comfy UI, an open-source user interface for running the Stable Diffusion model locally. The agent assists users by providing instructions, answering questions, and linking to relevant resources such as YouTube videos. The long-term goal is for the agent to create Comfy UI elements based on user requirements.
 
+![image](docs/comfy-ui-tutor-agent.png)
+
 ## Objectives and Goals
 - Enhance user experience by providing an interactive help system within Comfy UI.
 - Reduce the learning curve for new users by offering step-by-step instructions and resources.
