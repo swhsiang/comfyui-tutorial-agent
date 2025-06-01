@@ -250,6 +250,50 @@ Generate a response that includes a summary of the relevant information and a Yo
 - **Integration**: YouTube API for fetching video links.
 - **Vector Database**: Pinecone for storing and retrieving information extracted from YouTube videos and other data sources.
 
+### Database Schema Design
+
+To support basic authentication and ensure that all clients are legitimate, we will introduce a new table called `api_key`. This table will store API keys that clients must provide when making requests to the backend. The schema for the `api_key` table is as follows:
+
+#### `api_key` Table Schema
+
+- **id**: `UUID` (Primary Key) - A unique identifier for each API key.
+- **key**: `VARCHAR(255)` - The API key string.
+- **created_at**: `TIMESTAMP` - The timestamp when the API key was created.
+- **expires_at**: `TIMESTAMP` - The timestamp when the API key expires (optional).
+- **is_active**: `BOOLEAN` - A flag indicating whether the API key is active.
+
+#### SQL Schema Definition
+
+```sql
+CREATE TABLE api_key (
+    id UUID PRIMARY KEY,
+    key VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE
+);
+```
+
+#### Migration Scripts
+
+**Up Migration**
+
+```sql
+CREATE TABLE api_key (
+    id UUID PRIMARY KEY,
+    key VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE
+);
+```
+
+**Down Migration**
+
+```sql
+DROP TABLE IF EXISTS api_key;
+```
+
 ## File Structure
 To maintain a clean and modular codebase, the following directory structure is proposed:
 
@@ -316,6 +360,7 @@ app/
      - [x] Task: Develop the logic for processing user queries and generating responses.
      - [ ] Task: PostgreSQL integration
      - [ ] Task: Chatroom session management - CRUD
+     - [ ] Task: Basic authentication
    - **Video Processing**
      - [ ] Task: Implement the video processing module to generate transcripts using Google Gemini.
      - [ ] Task: Extract metadata from YouTube videos.
@@ -341,8 +386,10 @@ app/
 
 4. **Launch Phase**
    - **Deployment**
-     - [ ] Task: Set up the production environment for the frontend and backend.
-     - [ ] Task: Deploy the backend server to a cloud provider (e.g., Cloudflare).
+     - [x] Task: Set up the production environment for the frontend and backend.
+     - [x] Task: Deploy the backend server to a cloud provider (e.g., DigitalOcean).
+     - [ ] Set up Let's Encrypt
+     - [ ] Set up PostgreSQL
    - **Documentation**
      - [ ] Task: Create user documentation for the chatbot interface.
      - [x] Task: Create technical documentation for the system architecture and components.
